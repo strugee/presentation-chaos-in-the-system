@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Chaos in the system</title>
+    <link rel="stylesheet" type="text/css" href="build/build.css">
+  </head>
+  <body>
+    <article class="deck">
+      <section>
+        <h2>Chaos in the system</h2>
+        <h3>Why simple solutions don't work when they should</h3>
+      </section>
+      <section>
+        <h2>About me</h2>
+        <h3>AJ, he/they</h3>
+        <h3>Security person</h3>
+        <h3><code>filter-other-days</code> author</h3>
+        <h3>Linux user (via <a href="https://www.qubes-os.org/">Qubes OS</a>) but constantly eyeing the BSDs and illumos</h3>
+        <h3>Unix philosophy fan</h3>
+        <h3>I do not have any answers</h3>
+      </section>
+      <section>
+        <h2>About you</h2>
+        <h3>Shout it out</h3>
+      </section>
+      <section>
+        <h2>This talk in three sentences</h2>
+        <h3>Here is this program</h3>
+        <h3>It was way too hard to write this program</h3>
+        <h3>This program should not exist</h3>
+      </section>
+      <section>
+        <h2>What is <code>filter-other-days</code>?</h2>
+        <h3>Reliable logfile date filtering</h3>
+        <h3>Never incorrectly drops data under any circumstances</h3>
+        <h3>Suitable for security and reliability systems like Artificial Ignorance</h3>
+        <h3>Core shell script requires only POSIX</h3>
+      </section>
+      <section>
+        <h2>The problem</h2>
+        <h3>How to find all logs from the current day?</h3>
+        <h3><code>grep</code> for the current day</h3>
+        <h3>But, programs can decide how to format dates</h3>
+      </section>
+      <section>
+        <h2>Artificial Ignorance</h2>
+        <h3>Want to notice unusual things in your system</h3>
+        <h3>Can't enumerate everything unusual or interesting</h3>
+        <h3>So, throw out things we know are uninteresting</h3>
+        <h3><a href="https://github.com/strugee/steevie-usr-local/blob/master/bin/find-interesting-logs">Example</a></h3>
+      </section>
+      <section>
+        <h2><code>filter-other-days</code>' approach</h2>
+        <h3>Find all dates we don't care about and throw them out</h3>
+        <h3>Looks a lot like Artificial Ignorance</h3>
+        <h3><em>Never</em> silently drops information</h3>
+        <h3><code>grep -v</code></h3>
+      </section>
+      <section>
+        <h2>TODO</h2>
+      </section>
+      <section>
+        <h2>Portability</h2>
+        <h3>We value portability</h3>
+        <h3>See systemd</h3>
+        <h3>It was way too hard to write <code>filter-other-days</code></h3>
+      </section>
+      <section>
+        <h2>Problem #1: how to actually test the thing?</h2>
+        <h3>Can't just download a system that's pure POSIX</h3>
+        <h3>Note: <a href="http://heirloom.sourceforge.net/">Heirloom</a></h3>
+        <h3>This isn't enough though, because...</h3>
+      </section>
+      <section>
+        <h2>Context: localization support</h2>
+        <h3>GitHub <a href="https://github.com/strugee/filter-other-days/issues/17">bug #17</a></h3>
+        <h3>Make <code>filter-other-days</code> work for non-English languages</h3>
+        <h3>Problem: where do those strings come from? <code>locale -k</code></h3>
+      </section>
+      <section>
+        <h2>Problem #2: operating system bugs</h2>
+        <h3>FreeBSD <a href="https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=237752">bug #237752</a>: <code>abmon</code> vs. <code>abmon_1</code>, <code>abmon_2</code>, etc.</h3>
+        <h3>FreeBSD <a href="https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=241906">bug #241906</a>: <code>locale -k nonexistant</code> exit code</h3>
+        <h3>NetBSD <a href="https://gnats.netbsd.org/cgi-bin/query-pr-single.pl?number=54693">bug #54693</a>: <code>abmon</code> vs. <code>abmon_1</code>, <code>abmon_2</code>, etc.</h3>
+        <h3>NetBSD <a href="https://gnats.netbsd.org/cgi-bin/query-pr-single.pl?number=54692">bug #54692</a>: <code>locale -k nonexistant</code> exit code</h3>
+      </section>
+      <section>
+        <h2>Problem #3: POSIX support straight up missing</h2>
+        <h3>OpenBSD does not have <code>locale -k</code> even though you'd think it would</h3>
+        <h3><code>filter-other-days</code> 1.1.0 and 2.0.0 being released simultaneously</h3>
+      </section>
+      <section>
+        <h2>Conclusion:</h2>
+        <h3>A pure-POSIX system wouldn't even be enough</h3>
+        <h3>So you need to test on systems you care about anyway</h3>
+        <h3>This is super annoying</h3>
+        <h3>Not helped by the fact that shell scripts fail at runtime</h3>
+      </section>
+      <section>
+        <h2>Yet we value portability.</h2>
+        <h3>Disconnect</h3>
+        <h3>Values vs. difficulty in reality</h3>
+      </section>
+      <section>
+        <h2>This program should not exist</h2>
+        <h3><code>filter-other-days</code>' purpose is very strange</h3>
+        <h3>Extremely difficult to explain to someone not used to programming/ops</h3>
+      </section>
+      <section>
+        <h2>Root cause analysis</h2>
+        <h3 class="build">Why did I have this problem in the first place?</h3>
+        <h3 class="build">I do not understand my computer</h3>
+        <h3 class="build">This depite the fact that I have <code>root</code></h3>
+      </section>
+      <section>
+        <h2>Root cause analysis cont.</h2>
+        <h3>Systems are too complex</h3>
+        <h3>Hard to know what's going on at any time</h3>
+        <h3>Even harder to know what's going on in the future</h3>
+        <h3><a href="https://en.wikipedia.org/wiki/Combinatorial_explosion">Combinatorial explosion</a></h3>
+      </section>
+      <section>
+        <h2>In an ideal world...</h2>
+        <h3><code>filter-other-days</code> would not exist</h3>
+        <h3>I would be able to just <code>grep</code></h3>
+        <h3>So, what are our options?</h3>
+      </section>
+      <section>
+        <h2>Option 1: do nothing</h2>
+        <h3>Perfectly valid</h3>
+        <h3>Maybe we don't need these hard guarantees</h3>
+        <h3>Tradeoffs</h3>
+      </section>
+      <section>
+        <h2>Option 2: reduce expressiveness</h2>
+        <h3>Example: HTML</h3>
+        <h3>Not Turing-complete</h3>
+        <h3>Highly optimizable by the browser</h3>
+        <h3>And, useful beyond browsers</h3>
+        <h3>Tim Berners-Lee <a href="https://www.w3.org/DesignIssues/Principles.html">Principle of Least Power</a></h3>
+      </section>
+      <section>
+        <h2>Option 3: constrain the environment</h2>
+        <h3>Example: FreeBSD <a href="https://cloudabi.org/">CloudABI</a></h3>
+        <h3>Stop programs from accessing resources not explicitly granted by the administrator</h3>
+        <h3>Capabilities</h3>
+        <h3>Makes explicit input and output points</h3>
+      </section>
+      <section>
+        <h2>Option 4: improve observability</h2>
+        <h3>Maybe I just need better tools to introspect my system</h3>
+        <h3>E.g. "tell me if some program I don't know about writes to <code>/var/log</code>"</h3>
+      </section>
+      <section>
+        <h2>Option 5: rely on some central organizer</h2>
+        <h3>Example: Fedora and journald, ish</h3>
+        <h3>They take care of this problem for me</h3>
+        <h3>Holistic view I don't have</h3>
+        <h3>Or run your own: ELK</h3>
+      </section>
+      <section>
+        <h2>Option 6: impose order from above</h2>
+        <h3>Example: Qubes OS</h3>
+        <h3>Security operating system that runs all apps in virtual machines</h3>
+        <h3>Compromise in one doesn't spread. Damage is limited</h3>
+        <h3>Organizes complexity</h3>
+      </section>
+      <section>
+        <h2>Most of these are about <em>managing</em> complexity</h2>
+        <h3>Constrain the environment (CloudABI): limit bounds for one application</h3>
+        <h3>Rely on some central organizer (Fedora): find someone in a position to make holistic change</h3>
+        <h3>Impose order from above (Qubes): limit bounds of different groups of complexity</h3>
+      </section>
+      <section>
+        <h2>Discussion</h2>
+      </section>
+    </article>
+    <script src="build/build.js"></script>
+  </body>
+</html>
