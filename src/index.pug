@@ -1,0 +1,181 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1')
+    title Chaos in the system
+
+    link(rel='stylesheet', type='text/css', href='build/build.css')
+
+  body
+
+    article.deck
+
+      section
+        h2 Chaos in the system
+        h3 Why simple solutions don't work when they should
+
+      section
+        h2 About me
+        h3 AJ, he/they
+        h3 Security person
+        h3 #[code filter-other-days] author
+        h3 Linux user (via #[a(href='https://www.qubes-os.org/') Qubes OS]) but constantly eyeing the BSDs and illumos
+        h3 Unix philosophy fan
+
+      section
+        h2 About you
+        h3 Shout it out
+
+      section
+        h2 This talk in three sentences
+        h3 Here is this program
+        h3 It was way too hard to write this program
+        h3 This program should not exist
+
+      section
+        h2 What is #[code filter-other-days]?
+        h3 Reliable logfile date filtering
+        h3 Never incorrectly drops data under any circumstances
+        h3 Suitable for security and reliability systems like Artificial Ignorance
+        h3 Core shell script requires only POSIX
+
+      section
+        h2 The problem
+        h3 How to find all logs from the current day?
+        h3 #[code grep] for the current day
+        h3 But, programs can decide how to format dates
+
+      section
+        h2 Artificial Ignorance
+        h3 Want to notice unusual things in your system
+        h3 Can't enumerate everything unusual or interesting
+        h3 So, throw out things we know are uninteresting
+        h3 <a href="https://github.com/strugee/steevie-usr-local/blob/master/bin/find-interesting-logs">Example</a>
+
+      section
+        h2 #[code filter-other-days]' approach
+        h3 Find all dates we don't care about and throw them out
+        h3 Looks a lot like Artificial Ignorance
+        h3 #[em Never] silently drops information
+        h3 #[code grep -v]
+
+      section
+        h2 TODO
+
+      section
+        h2 Portability
+        h3 We value portability
+        h3 See systemd
+        h3 It was way too hard to write #[code filter-other-days]
+
+      section
+        h2 Problem #1: how to actually test the thing?
+        h3 Can't just download a system that's pure POSIX
+        h3 Note: <a href="http://heirloom.sourceforge.net/">Heirloom</a>
+        h3 This isn't enough though, because...
+
+      section
+        h2 Context: localization support
+        h3 GitHub <a href="https://github.com/strugee/filter-other-days/issues/17">bug #17</a>
+        h3 Make #[code filter-other-days] work for non-English languages
+        h3 Problem: where do those strings come from? #[code locale -k]
+
+      section
+        h2 Problem #2: operating system bugs
+        h3 FreeBSD <a href="https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=237752">bug #237752</a>: #[code abmon] vs. #[code abmon_1], #[code abmon_2], etc.
+        h3 FreeBSD <a href="https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=241906">bug #241906</a>: #[code locale -k nonexistant] exit code
+        h3 NetBSD <a href="https://gnats.netbsd.org/cgi-bin/query-pr-single.pl?number=54693">bug #54693</a>: #[code abmon] vs. #[code abmon_1], #[code abmon_2], etc.
+        h3 NetBSD <a href="https://gnats.netbsd.org/cgi-bin/query-pr-single.pl?number=54692">bug #54692</a>: #[code locale -k nonexistant] exit code
+
+      section
+        h2 Problem #3: POSIX support straight up missing
+        h3 OpenBSD does not have #[code locale -k] even though you'd think it would
+        h3 #[code filter-other-days] 1.1.0 and 2.0.0 being released simultaneously
+
+      section
+        h2 Conclusion:
+        h3 A pure-POSIX system wouldn't even be enough
+        h3 So you need to test on systems you care about anyway
+        h3 This is super annoying
+        h3 Not helped by the fact that shell scripts fail at runtime
+        
+      section
+        h2 Yet we value portability.
+        h3 Disconnect
+        h3 Values vs. difficulty in reality
+
+      section
+        h2 This program should not exist
+        h3 #[code filter-other-days]' purpose is very strange
+        h3 Extremely difficult to explain to someone not used to programming/ops
+
+      section
+        h2 Root cause analysis
+        h3.build Why did I have this problem in the first place?
+        h3.build I do not understand my computer
+        h3.build This depite the fact that I have #[code root]
+
+      section
+        h2 Root cause analysis cont.
+        h3 Systems are too complex
+        h3 Hard to know what's going on at any time
+        h3 Even harder to know what's going on in the future
+        h3
+          a(href='https://en.wikipedia.org/wiki/Combinatorial_explosion') Combinatorial explosion
+
+      section
+        h2 In an ideal world...
+        h3 #[code filter-other-days] would not exist
+        h3 I would be able to just #[code grep]
+        h3 So, what are our options?
+
+      section
+        h2 Option 1: do nothing
+        h3 Perfectly valid
+        h3 Maybe we don't need these hard guarantees
+        h3 Tradeoffs
+
+      section
+        h2 Option 2: reduce expressiveness
+        h3 Example: HTML
+        h3 Not Turing-complete
+        h3 Highly optimizable by the browser
+        h3 And, useful beyond browsers
+        h3 Tim Berners-Lee <a href="https://www.w3.org/DesignIssues/Principles.html">Principle of Least Power</a>
+
+      section
+        h2 Option 3: constrain the environment
+        h3 Example: FreeBSD <a href="https://cloudabi.org/">CloudABI</a>
+        h3 Stop programs from accessing resources not explicitly granted by the administrator
+        h3 Capabilities
+        h3 Makes explicit input and output points
+
+      section
+        h2 Option 4: improve observability
+        h3 Maybe I just need better tools to introspect my system
+        h3 E.g. "tell me if some program I don't know about writes to #[code /var/log]"
+
+      section
+        h2 Option 5: rely on some central organizer
+        h3 Example: Fedora and journald, ish
+        h3 They take care of this problem for me
+        h3 Holistic view I don't have
+        
+      section
+        h2 Option 6: impose order from above
+        h3 Example: Qubes OS
+        h3 Security operating system that runs all apps in virtual machines
+        h3 Compromise in one doesn't spread. Damage is limited
+        h3 Organizes complexity
+
+      section
+        h2 Most of these are about #[em managing] complexity
+        h3 Constrain the environment (CloudABI): limit bounds for one application
+        h3 Rely on some central organizer (Fedora): find someone in a position to make holistic change
+        h3 Impose order from above (Qubes): limit bounds of different groups of complexity
+
+      section
+        h2 Discussion
+
+    script(src='build/build.js')
