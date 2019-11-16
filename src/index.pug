@@ -62,7 +62,22 @@ html
         h3 #[code grep -v]
 
       section
-        h2 TODO
+        h2 Examples
+        code
+          pre.language-shell.
+            echo '2017-01-01' | filter-other-days
+            cat daemon.log syslog.log | filter-other-days
+            filter-other-days < logfile
+
+      section
+        h2 Other features
+        h3 Can work on any day on most systems (#[code -d])
+        h3 Supports multiple locales on most systems
+        h3 #[em Extremely] portable
+        h3 Well-documented
+        h3 Single file that can be copied around and used standalone
+
+      // TODO do we need more here?
 
       section
         h2 Portability
@@ -71,16 +86,16 @@ html
         h3 It was way too hard to write #[code filter-other-days]
 
       section
-        h2 Problem #1: how to actually test the thing?
-        h3 Can't just download a system that's pure POSIX
-        h3 Note: <a href="http://heirloom.sourceforge.net/">Heirloom</a>
-        h3 This isn't enough though, because...
-
-      section
         h2 Context: localization support
         h3 GitHub <a href="https://github.com/strugee/filter-other-days/issues/17">bug #17</a>
         h3 Make #[code filter-other-days] work for non-English languages
         h3 Problem: where do those strings come from? #[code locale -k]
+
+      section
+        h2 Problem #1: how to actually test the thing?
+        h3 Can't just download a system that's pure POSIX
+        h3 Note: <a href="http://heirloom.sourceforge.net/">Heirloom</a>
+        h3 This isn't enough though...
 
       section
         h2 Problem #2: operating system bugs
@@ -93,6 +108,11 @@ html
         h2 Problem #3: POSIX support straight up missing
         h3 OpenBSD does not have #[code locale -k] even though you'd think it would
         h3 #[code filter-other-days] 1.1.0 and 2.0.0 being released simultaneously
+
+      section
+        h2 Problem #4: POSIX just isn't enough
+        h3 #[code -d] cannot be done on POSIX
+        h3 Need #[date -d] (GNU) or #[date -r] (FreeBSD, NetBSD, illumos, etc.)
 
       section
         h2 Conclusion:
