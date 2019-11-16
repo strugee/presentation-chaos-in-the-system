@@ -59,8 +59,21 @@
         <h3><code>grep -v</code></h3>
       </section>
       <section>
-        <h2>TODO</h2>
+        <h2>Examples</h2><code>
+          <pre class="language-shell">echo '2017-01-01' | filter-other-days
+cat daemon.log syslog.log | filter-other-days
+filter-other-days < logfile
+</pre></code>
       </section>
+      <section>
+        <h2>Other features</h2>
+        <h3>Can work on any day on most systems (<code>-d</code>)</h3>
+        <h3>Supports multiple locales on most systems</h3>
+        <h3><em>Extremely</em> portable</h3>
+        <h3>Well-documented</h3>
+        <h3>Single file that can be copied around and used standalone</h3>
+      </section>
+      <!-- TODO do we need more here?-->
       <section>
         <h2>Portability</h2>
         <h3>We value portability</h3>
@@ -68,16 +81,16 @@
         <h3>It was way too hard to write <code>filter-other-days</code></h3>
       </section>
       <section>
-        <h2>Problem #1: how to actually test the thing?</h2>
-        <h3>Can't just download a system that's pure POSIX</h3>
-        <h3>Note: <a href="http://heirloom.sourceforge.net/">Heirloom</a></h3>
-        <h3>This isn't enough though, because...</h3>
-      </section>
-      <section>
         <h2>Context: localization support</h2>
         <h3>GitHub <a href="https://github.com/strugee/filter-other-days/issues/17">bug #17</a></h3>
         <h3>Make <code>filter-other-days</code> work for non-English languages</h3>
         <h3>Problem: where do those strings come from? <code>locale -k</code></h3>
+      </section>
+      <section>
+        <h2>Problem #1: how to actually test the thing?</h2>
+        <h3>Can't just download a system that's pure POSIX</h3>
+        <h3>Note: <a href="http://heirloom.sourceforge.net/">Heirloom</a></h3>
+        <h3>This isn't enough though...</h3>
       </section>
       <section>
         <h2>Problem #2: operating system bugs</h2>
@@ -90,6 +103,14 @@
         <h2>Problem #3: POSIX support straight up missing</h2>
         <h3>OpenBSD does not have <code>locale -k</code> even though you'd think it would</h3>
         <h3><code>filter-other-days</code> 1.1.0 and 2.0.0 being released simultaneously</h3>
+      </section>
+      <section>
+        <h2>Problem #4: POSIX just isn't enough</h2>
+        <h3><code>-d</code> cannot be done on POSIX</h3>
+        <h3>Need 
+          <date>-d</date> (GNU) or 
+          <date>-r</date> (FreeBSD, NetBSD, illumos, etc.)
+        </h3>
       </section>
       <section>
         <h2>Conclusion:</h2>
